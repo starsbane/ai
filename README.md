@@ -3,7 +3,10 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/starsbane/ai)
 [![GitHub stars](https://img.shields.io/github/stars/starsbane/ai)](https://github.com/starsbane/ai/stargazers)
 
-A .NET standard 2.0/.NET 8.0+ library that provides unified interfaces to generate chat, image, embedding, video and speech from text as well as extract text or document intelligence from images across Azure, AWS, Google Cloud and Alibaba Cloud. 
+This library aims to provide a unified approach for representing generative AI components, and enable seamless integration and interoperability with AI services from various providers such as Azure OpenAI, Amazon, Google and Aliyun/Alicloud.
+Compatible to .NET standard 2.0 and .NET 8.0+.
+
+Besides the interfaces from Microsoft.Extensions.AI library (IEmbeddingGenerator, IChatClient and IImageGenerator), this library also provides and implements interfaces for video and speech generation (IVideoGenerator, ISpeechGenerator).
 
 | Package Name | Description | Related Platform Services |
 | --- | --- | --- |
