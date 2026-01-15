@@ -1,4 +1,4 @@
-# Gemini API Client for .NET and ASP.NET Core
+# Starsbane.AI
 [![GitHub](https://img.shields.io/github/license/starsbane/ai)](https://github.com/starsbane/ai/blob/main/LICENSE)
 ![GitHub last commit](https://img.shields.io/github/last-commit/starsbane/ai)
 [![GitHub stars](https://img.shields.io/github/stars/starsbane/ai)](https://github.com/starsbane/ai/stargazers)
