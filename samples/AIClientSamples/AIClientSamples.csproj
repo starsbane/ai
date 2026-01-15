@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>ac8055b6-9d1f-4a27-820f-18d51a579a51</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include=".env" Condition="Exists('.env')">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="appsettings.user.json" Condition="Exists('appsettings.user.json')">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<DependentUpon>appsettings.json</DependentUpon>
+		</Content>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Starsbane.AI.Alicloud\Starsbane.AI.Alicloud.csproj" />
+		<ProjectReference Include="..\..\src\Starsbane.AI.Amazon\Starsbane.AI.Amazon.csproj" />
+		<ProjectReference Include="..\..\src\Starsbane.AI.Azure\Starsbane.AI.Azure.csproj" />
+		<ProjectReference Include="..\..\src\Starsbane.AI.Google\Starsbane.AI.Google.csproj" />
+		<ProjectReference Include="..\..\src\Starsbane.AI\Starsbane.AI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="document_extraction_1.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="sample1.pdf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="sample2.pdf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="pdf_chunking_1.pdf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="text_extraction_1.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>

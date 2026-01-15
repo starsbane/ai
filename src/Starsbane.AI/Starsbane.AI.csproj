@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0;net9.0;net8.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<DisableMinimumSupportedTfmCompatErrors>true</DisableMinimumSupportedTfmCompatErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="PdfPig" Version="0.1.13" />
+		<PackageReference Include="ICU4N" Version="60.1.0-alpha.438" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Starsbane.AI.Abstractions\Starsbane.AI.Abstractions.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<InjectExperimentalAttributeOnLegacy>true</InjectExperimentalAttributeOnLegacy>
+		<InjectRequiredMemberOnLegacy>true</InjectRequiredMemberOnLegacy>
+		<InjectSharedEmptyCollections>true</InjectSharedEmptyCollections>
+		<InjectStringHashOnLegacy>true</InjectStringHashOnLegacy>
+		<InjectStringSyntaxAttributeOnLegacy>true</InjectStringSyntaxAttributeOnLegacy>
+		<InjectSystemIndexOnLegacy>true</InjectSystemIndexOnLegacy>
+	</PropertyGroup>
+
+
+</Project>

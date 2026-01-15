@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+
+  <ItemGroup>
+        <PackageReference Include="Markdig" Version="0.44.0" />
+        <PackageReference Include="Syncfusion.Blazor.InteractiveChat" Version="32.1.22" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="32.1.22" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="32.1.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Starsbane.AI.Alicloud\Starsbane.AI.Alicloud.csproj" />
+    <ProjectReference Include="..\..\src\Starsbane.AI.Amazon\Starsbane.AI.Amazon.csproj" />
+    <ProjectReference Include="..\..\src\Starsbane.AI.Azure\Starsbane.AI.Azure.csproj" />
+    <ProjectReference Include="..\..\src\Starsbane.AI.Google\Starsbane.AI.Google.csproj" />
+    <ProjectReference Include="..\..\src\Starsbane.AI\Starsbane.AI.csproj" />
+  </ItemGroup>
+
+  
+
+</Project>

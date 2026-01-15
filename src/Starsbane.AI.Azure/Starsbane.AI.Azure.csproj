@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<NoWarn>$(NoWarn);MEAI001;OPENAI001;</NoWarn>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Starsbane.AI\Starsbane.AI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.AI.DocumentIntelligence" Version="1.0.0" />
+		<PackageReference Include="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
+		<PackageReference Include="Azure.AI.Vision.ImageAnalysis" Version="1.0.0" />
+		<PackageReference Include="Azure.Identity" Version="1.17.1" />
+		<PackageReference Include="AzureSoraSDK" Version="1.0.2" />
+		<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.1.1-preview.1.25612.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.1" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<InjectExperimentalAttributeOnLegacy>true</InjectExperimentalAttributeOnLegacy>
+		<InjectRequiredMemberOnLegacy>true</InjectRequiredMemberOnLegacy>
+		<InjectSharedEmptyCollections>true</InjectSharedEmptyCollections>
+		<InjectStringHashOnLegacy>true</InjectStringHashOnLegacy>
+		<InjectStringSyntaxAttributeOnLegacy>true</InjectStringSyntaxAttributeOnLegacy>
+		<InjectSystemIndexOnLegacy>true</InjectSystemIndexOnLegacy>
+	</PropertyGroup>
+
+
+</Project>

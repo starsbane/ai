@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0;net9.0;net8.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<NoWarn>$(NoWarn);MEAI001;OPENAI001;</NoWarn>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Starsbane.AI\Starsbane.AI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.BedrockRuntime" Version="4.0.14.5" />
+		<PackageReference Include="AWSSDK.Extensions.Bedrock.MEAI" Version="4.0.5.3" />
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.3.19" />
+		<PackageReference Include="AWSSDK.Polly" Version="4.0.3.12" />
+		<PackageReference Include="AWSSDK.Rekognition" Version="4.0.3.10" />
+		<PackageReference Include="AWSSDK.S3" Version="4.0.17" />
+		<PackageReference Include="AWSSDK.Textract" Version="4.0.3.10" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<InjectExperimentalAttributeOnLegacy>true</InjectExperimentalAttributeOnLegacy>
+		<InjectRequiredMemberOnLegacy>true</InjectRequiredMemberOnLegacy>
+		<InjectSharedEmptyCollections>true</InjectSharedEmptyCollections>
+		<InjectStringHashOnLegacy>true</InjectStringHashOnLegacy>
+		<InjectStringSyntaxAttributeOnLegacy>true</InjectStringSyntaxAttributeOnLegacy>
+		<InjectSystemIndexOnLegacy>true</InjectSystemIndexOnLegacy>
+	</PropertyGroup>
+
+
+</Project>

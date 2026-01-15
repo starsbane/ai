@@ -1,0 +1,109 @@
+﻿@page "/aiassistview-features"
+@rendermode InteractiveServer
+@using System.Text
+@using Markdig
+@using Microsoft.Extensions.AI
+@using Starsbane.AI
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.InteractiveChat
+@using ChatMessage = Microsoft.Extensions.AI.ChatMessage
+<PageTitle>AI Assist View</PageTitle>
+<div id="ControlRegion">
+    <div class="aiassistview-control">
+        <SfAIAssistView @ref="assistView" ID="aiAssistView" PromptSuggestions="@Suggestions" PromptRequested="@PromptRequest" Width="100%" Height="100%">
+            <AssistViews>
+                <AssistView>
+                    <BannerTemplate>
+                        <div class="banner-content">
+                            <div class="e-icons e-assistview-icon"></div>
+                            <h3>AI Assistance</h3>
+                            <i>To get started, provide input or choose a suggestion.</i>
+                        </div>
+                    </BannerTemplate>
+                </AssistView>
+            </AssistViews>
+            <AssistViewToolbar ItemClicked="ToolbarItemClicked">
+                <AssistViewToolbarItem Type="ItemType.Spacer"></AssistViewToolbarItem>
+                <AssistViewToolbarItem IconCss="e-icons e-refresh"></AssistViewToolbarItem>
+            </AssistViewToolbar>
+        </SfAIAssistView>
+ </div>
+</div>
+@code {
+    List<string> Suggestions = new List<string> { "What is Generative AI?", "Which LLM model are you and which cloud platform are you in?" };
+    public class AssistModel
+    {
+        public string Prompt { get; set; }
+        public string Response { get; set; }
+        public List<string> SuggestionData { get; set; }
+    }
+    private List<AssistViewPrompt> defaultPrompt = new List<AssistViewPrompt>()
+    {
+        new AssistViewPrompt() { Response = "Hello, I am your AI assistant, how can I help you today?" }
+    };
+
+    private readonly IEnumerable<IAIClient> _aiClients;
+
+    public AIAssistViewFeatures(IEnumerable<IAIClient> aiClients)
+    {
+        _aiClients = aiClients;
+    }
+
+    private SfAIAssistView assistView;
+    private Dictionary<Platform, string> finalResponse { get; set; }
+
+    private async Task PromptRequest(AssistViewPromptRequestedEventArgs args)
+    {
+        try
+        {
+            var systemMessage = new ChatMessage(ChatRole.System, "You are a helpful AI assistant.");
+            var stringBuilder = new StringBuilder();
+
+            try
+            {
+                foreach (var aiClient in _aiClients)
+                {
+                    var chatResponse = await aiClient.GetChatClient().GetResponseAsync([systemMessage, new ChatMessage(ChatRole.User, args.Prompt)]);
+
+                    var responseText = chatResponse.Text;
+                    var pipeline = new MarkdownPipelineBuilder()
+                        .UseAdvancedExtensions()
+                        .UsePipeTables()
+                        .UseTaskLists()
+                        .Build();
+
+                    stringBuilder.AppendLine($"{aiClient.Platform.ToString()}: " + Markdown.ToHtml(responseText, pipeline));
+                }
+
+
+                args.Response = stringBuilder.ToString();
+            }
+            catch (Exception ex)
+            {
+                args.Response = $"Error: {ex.Message}";
+            }
+
+            // Add the response to the AIAssistView
+            args.Response = stringBuilder.ToString();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching Gemini response: {ex.Message}");
+            await Task.Delay(1000);
+            args.Response = "⚠️ Something went wrong while connecting to the AI service. Please try again later.";
+        }
+    }
+
+    private void ToolbarItemClicked(AssistViewToolbarItemClickedEventArgs args)
+    {
+        assistView.Prompts.Clear();
+        StateHasChanged();
+    }
+}
+<style>
+    .aiassistview-control {
+        height: 600px;
+        width: 80%;
+        margin: 0 auto;
+    }
+</style>

@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="samples/AIChatbotSample/AIChatbotSample.csproj" />
+    <Project Path="samples/AIClientSamples/AIClientSamples.csproj" />
+  </Folder>
+  <Folder Name="/Source/">
+    <Project Path="src/Starsbane.AI.Abstractions/Starsbane.AI.Abstractions.csproj" Id="a9932a09-fbd5-44d1-bb9a-271b7ee1a82a" />
+    <Project Path="src/Starsbane.AI.Alicloud/Starsbane.AI.Alicloud.csproj" />
+    <Project Path="src/Starsbane.AI.Amazon/Starsbane.AI.Amazon.csproj" />
+    <Project Path="src/Starsbane.AI.Azure/Starsbane.AI.Azure.csproj" />
+    <Project Path="src/Starsbane.AI.Google/Starsbane.AI.Google.csproj" />
+    <Project Path="src/Starsbane.AI/Starsbane.AI.csproj" />
+  </Folder>
+</Solution>
