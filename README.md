@@ -22,6 +22,7 @@ The sentence chunking support is powered by source code from [github.com/GregorB
 
 ## To-dos
 - Implement tools support for Starsbane.AI.Google
+- Comprehensive documentation, getting started, installation procedure
 - Better platform and model specific config validation 
 - and many more...
 
