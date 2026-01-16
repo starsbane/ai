@@ -16,38 +16,7 @@ namespace Starsbane.AI.Google
             var mergedOptions = options.Merge(ClientOptions.Chat);
             _ = Throw.IfNullOrEmpty(mergedOptions.ModelId);
 
-            var contents = messages.Select(m => new Content()
-            {
-                Role = m.Role.Value.ToLower(),
-                Parts = [new Part() { Text = m.Text }],
-            }).ToList();
-
-            var response = await PlatformClient.Models.GenerateContentAsync(mergedOptions.ModelId, contents, options.AsGenerateContentConfig());
-
-            var c = response.Candidates?.First();
-            return new ChatResponse
-            {
-                Messages = new List<ChatMessage>()
-                {
-                    new()
-                    {
-                        Role = new ChatRole(c.Content.Role ?? "user"),
-                        Contents = c.Content.Parts?.Select(p => new TextContent(p.Text) as AIContent).ToList(),
-                    }
-                },
-                ResponseId = response.ResponseId,
-                CreatedAt = response.CreateTime,
-                Usage = new UsageDetails
-                {
-                    InputTokenCount = response.UsageMetadata?.PromptTokenCount,
-                    OutputTokenCount = response.UsageMetadata?.CandidatesTokenCount,
-                    TotalTokenCount = response.UsageMetadata?.TotalTokenCount,
-                    CachedInputTokenCount = response.UsageMetadata?.CachedContentTokenCount,
-                    ReasoningTokenCount = response.UsageMetadata?.ThoughtsTokenCount,
-                },
-                RawRepresentation = response.SdkHttpResponse,
-                FinishReason = c.FinishReason.AsChatFinishReason(),
-            };
+            return await PlatformClient.AsIChatClient(mergedOptions.ModelId).GetResponseAsync(messages, mergedOptions, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -61,25 +30,9 @@ namespace Starsbane.AI.Google
             var mergedOptions = options.Merge(ClientOptions.Chat);
             _ = Throw.IfNullOrEmpty(mergedOptions.ModelId);
 
-            var contents = messages.Select(m => new Content()
+            await foreach (var cru in PlatformClient.AsIChatClient().GetStreamingResponseAsync(messages, mergedOptions, cancellationToken))
             {
-                Role = m.Role.Value.ToLower(),
-                Parts = [new Part() { Text = m.Text }],
-            }).ToList();
-
-            await foreach (var response in PlatformClient.Models.GenerateContentStreamAsync(mergedOptions.ModelId, contents,
-                               options.AsGenerateContentConfig()))
-            {
-                var c = response.Candidates?.First();
-                yield return new ChatResponseUpdate
-                {
-                    Role = new ChatRole(c.Content.Role),
-                    Contents = c.Content.Parts?.Select(p => new TextContent(p.Text) as AIContent).ToList(),
-                    ResponseId = response.ResponseId,
-                    CreatedAt = response.CreateTime,
-                    FinishReason = c.FinishReason.AsChatFinishReason(),
-                    RawRepresentation = response.SdkHttpResponse
-                };
+                yield return cru;
             }
         }
 

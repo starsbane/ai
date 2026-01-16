@@ -34,37 +34,18 @@ namespace Starsbane.AI.Google
                 dimensions = Throw.IfLessThan(mergedOptions.Dimensions ?? 1024, 1);
             }
 
-            var contents = values.Select(input => new Content() { Parts = [new() { Text = input }] }).ToList();
+            mergedOptions.Dimensions = dimensions;
 
-            var operation = await PlatformClient.Models.EmbedContentAsync(
-                mergedOptions.ModelId,
-                contents,
-                new EmbedContentConfig() { OutputDimensionality = dimensions }
-            );
-
-            var retval = new GeneratedEmbeddings<Embedding<float>>();
-            var createdAt = DateTimeOffset.Now;
-
-            if (operation.Embeddings != null)
+            var generatedEmbeddings = await PlatformClient.AsIEmbeddingGenerator().GenerateAsync(values, mergedOptions, cancellationToken);
+            for (var i = 0; i < values.Count(); i++)
             {
-                for (var i = 0; i < operation.Embeddings.Count; i++)
-                {
-                    retval.Add(new Embedding<float>(Array.ConvertAll(operation.Embeddings[i].Values?.ToArray(), d => (float)d))
-                    {
-                        CreatedAt = createdAt,
-                        ModelId = mergedOptions.ModelId,
-                        AdditionalProperties = new(new Dictionary<string, object?>
-                        {
-                            { "Platform", Parent.Platform },
-                            { "OriginalString", values.ElementAt(i) }
-                        }),
-                    });
-                }
-
-                return retval;
+                var generatedEmbedding = generatedEmbeddings[i];
+                generatedEmbedding.AdditionalProperties ??= new AdditionalPropertiesDictionary();
+                generatedEmbedding.AdditionalProperties.Add("Platform", Parent.Platform);
+                generatedEmbedding.AdditionalProperties.Add("OriginalString", values.ElementAt(i));
             }
 
-            throw new InvalidOperationException($"{nameof(IEmbeddingGenerator<string, Embedding<float>>.GenerateAsync)} completed but content is empty.");
+            return generatedEmbeddings;
         }
 
         /// <inheritdoc/>
